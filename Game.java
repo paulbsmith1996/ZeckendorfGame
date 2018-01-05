@@ -1,3 +1,26 @@
+/**
+ * @author - Paul Baird-Smith 2017-2018
+ * ppb366@cs.utexas.edu
+ *
+ * A Game object can be constructed using a number n, and when played using the
+ * playGame() method, plays through the nth Zeckendorf Decomposition game, according
+ * to (Epstein 2018).
+ *
+ * The Game object wraps the Tree of GameStates that represent all possible moves to
+ * play in the nth ZD game.
+ *
+ * To determine the winner of the nth game, construct the Game using Game(n), call 
+ * playGame() on the game, and then call determineVal(), passing the root of the
+ * Game Tree as an argument. This recursively computes the winner of the game.
+ *
+ * As not all nodes need to have their winner value computed, determineVal() doesn't
+ * assign a winner value to each node in the game Tree. Therefore, to compute the
+ * winner value of an intermediate node, it may be necessary to call determineVal()
+ * on all nodes in the game tree (this is not recommended if several games are being
+ * played as this is a costly process).
+ *
+ */
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -142,7 +165,7 @@ public class Game {
 
         // Print interesting information
         
-        //System.out.println("All games played after " + curDepth + " moves.");
+        System.out.println("All games played after " + curDepth + " moves.");
         System.out.println("Explored " + numNodes + " nodes.");
         //System.out.println("Total of " + numEnds + " games played.");
         //System.out.println(start.determineVal());

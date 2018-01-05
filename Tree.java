@@ -12,7 +12,6 @@
  * and parents, and can also be flattened into an ArrayList, using the given
  * utility funtion.
  *
- *
  */
 
 import java.util.ArrayList;

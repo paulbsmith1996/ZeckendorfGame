@@ -2,7 +2,7 @@
  * @author - Paul Baird-Smith 2017-2018
  * ppb366@cs.utexas.edu
  *
- * Describes a GameState in the Zeckendorf Decomposition according to (Epstein 2017),
+ * Describes a GameState in the Zeckendorf Decomposition according to (Epstein 2018),
  * en route to publication at the time of writing. Each GameState object maintains a
  * decomposition state, which is a map keyed by indeces of Fibonacci numbers, whose
  * values are the frequencies of the respective Fibonacci numbers.
