@@ -1,3 +1,20 @@
+/**
+ * @author - Paul Baird-Smith 2017-2018
+ * ppb366@cs.utexas.edu
+ *
+ * Class describing a generic layered data structure. This describes a
+ * specific kind of directed acyclic graph, where the distance of a Tree 
+ * from the root is well-defined (i.e. all paths that exist from the root to
+ * the Tree are of the same length).
+ *
+ * Each Tree object holds a list of parent Trees and children Trees, as well
+ * as a state, or value. The class supports adding and removing of children
+ * and parents, and can also be flattened into an ArrayList, using the given
+ * utility funtion.
+ *
+ *
+ */
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 

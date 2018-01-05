@@ -1,3 +1,35 @@
+/**
+ * @author - Paul Baird-Smith 2017-2018
+ * ppb366@cs.utexas.edu
+ *
+ * Describes a GameState in the Zeckendorf Decomposition according to (Epstein 2017),
+ * en route to publication at the time of writing. Each GameState object maintains a
+ * decomposition state, which is a map keyed by indeces of Fibonacci numbers, whose
+ * values are the frequencies of the respective Fibonacci numbers.
+ *
+ * Maintains a win value, a depth, and an n. The win value is set to 0 originally,
+ * and is then assigned to 1 for a Player 1 victory or a -1 for a Player 2 victory.
+ * The depth represents the number of moves taken to reach the GameState object from
+ * the original GameState, defined by the number n of starting 1s.
+ *
+ * Applying moves 1, 2, or 3 to a GameState object yields a new GameState. If the
+ * move is invalid according to the Decomposition game, the original GameState object
+ * is returned, otherwise the rseult of applying the move to the state is returned.
+ *
+ *      Move 1 consists of summing 2 consecutive indices together.
+ *      Move 2 consists of splitting 2 Fibonaccis of the same index into 2 new
+ *             Fibonaccis
+ *      Move 3 consists of summing two 1s together to make a 2
+ *
+ * The genChildren() method creates a list of all possible states that follow the 
+ * GameState object. This list is obtained by applying all valid moves to a GameState.
+ *
+ * Utility methods are also provided to determine whether or not a GameState is
+ * terminal (no valid moves can be taken) or if it is equivalent, in depth and state,
+ * to another GameState object.
+ *
+ */
+
 import java.util.HashMap;
 import java.util.ArrayList;
 
