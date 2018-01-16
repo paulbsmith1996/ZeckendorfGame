@@ -1,2 +1,9 @@
 GameTree*
 *.class
+*.pdf
+*.pages
+*.csv
+*.numbers
+TreeParser.*
+GameStateTrib.*
+GameTrib.*

@@ -42,6 +42,11 @@ public class Game {
     private Tree<GameState> topRoot;
 
     /**
+     * Holds a list of the GameStates in a winning strategy for Player 2
+     */
+    private LinkedList<Tree<GameState>> winningPath;
+
+    /**
      * Constructor for a Game on n 1s
      *
      * @param n - The number of 1s in the starting decomposition of the fibonacci game
@@ -52,8 +57,13 @@ public class Game {
 	this.n = n;
 	this.initGameState = new GameState(n);
 	this.topRoot = new Tree<GameState>(initGameState);
+	this.winningPath = new LinkedList<Tree<GameState>>();
     }
 
+
+    //==================================
+    // GETTERS AND SETTERS
+    //==================================
 
     /**
      * Getter and setter for the initial number of 1s
@@ -75,6 +85,16 @@ public class Game {
     public Tree<GameState> getRoot() { return this.topRoot; }
     public void setRoot(Tree<GameState> root) { this.topRoot = root; }
 
+    /**
+     * Getter for the list of winning paths. No setter.
+     */
+    public LinkedList<Tree<GameState>> getWinningPath() { return this.winningPath; }
+
+
+
+    //==================================
+    // GAME RUNNING METHODS
+    //==================================
 
     /**
      * Generates the game tree for the Game object
@@ -83,8 +103,6 @@ public class Game {
      */
     public int playGame() {
 
-	System.out.println("Playing game");
-	
 	// Maintain the list of GameState Trees to explore
         LinkedList<Tree<GameState>> toExplore = new LinkedList<Tree<GameState>>();
         toExplore.add(this.topRoot);
@@ -110,7 +128,6 @@ public class Game {
             if(state.getDepth() > curDepth) {
                 curDepth = state.getDepth();
 		curLayer = new ArrayList<Tree<GameState>>();
-		System.out.println("Checked up to " + curDepth + " moves");
             }
 
             // Check if state is terminal and update queue
@@ -167,10 +184,9 @@ public class Game {
         
         System.out.println("All games played after " + curDepth + " moves.");
         System.out.println("Explored " + numNodes + " nodes.");
-        //System.out.println("Total of " + numEnds + " games played.");
-        //System.out.println(start.determineVal());
+        System.out.println("Winner is: " + determineVal(this.topRoot));
         
-	System.out.println("Finding value");
+	//System.out.println("Finding value");
         return determineVal(this.topRoot);
     }
 
@@ -206,7 +222,12 @@ public class Game {
                 return 1;
 
             } else {
-		// Player 2 wins if an even number of moves have been played
+		// Player 2 wins if an even number of moves have been played.
+		// Update values and also the winning path 
+		if(this.winningPath.size() == 0 
+		   || this.winningPath.peek().getParents().contains(tree)) {
+		    this.winningPath.addFirst(tree);
+		}
                 state.setVal(-1);
                 return -1;
 
@@ -235,6 +256,11 @@ public class Game {
                     }
                 }
 
+		// Update values and also the winning path 
+		if(this.winningPath.size() == 0 
+		   || this.winningPath.peek().getParents().contains(tree)) {
+		    this.winningPath.addFirst(tree);
+		}
                 state.setVal(-1);
                 return -1;
 
@@ -246,6 +272,12 @@ public class Game {
                 for(Tree<GameState> child: children) {
 
 		    if(child.getState().getVal() == -1) {
+
+			// Update values and also the winning path 
+			if(this.winningPath.size() == 0 
+			   || this.winningPath.peek().getParents().contains(tree)) {
+				this.winningPath.addFirst(tree);
+			}
 			state.setVal(-1);
 			return -1;
 		    }
@@ -254,6 +286,12 @@ public class Game {
 		// Get the minimum over all possible subsequent GameStates 
                 for(Tree<GameState> child: children) {
                     if(determineVal(child) == -1) {
+
+			// Update values and also the winning path 
+			if(this.winningPath.size() == 0 
+			   || this.winningPath.peek().getParents().contains(tree)) {
+				this.winningPath.addFirst(tree);
+			}
 			state.setVal(-1);
 			return -1;
                     }
@@ -266,18 +304,55 @@ public class Game {
         }
     }
 
+
+    //==================================
+    // MAIN METHOD
+    //==================================
+
+
     public static void main(String[] args) {
 	System.out.println();
+
+	//============================================
+	// COLLECTION OF RUNNABLE POSSIBILITIES
+	//============================================
 	
 	/*
 	for(int gameNum = 1; gameNum <= 50; gameNum++) {
-	    System.out.println("Game on " + gameNum);
+	    System.out.print("\n---------------------------------\n");
+	    System.out.println(gameNum + "\n");
+	    //System.out.println("Game on " + gameNum);
 	    Game game = new Game(gameNum);
-	    System.out.println("Winner is: " + game.playGame() + "\n");
+	    game.playGame();
+	    //System.out.println("Winner is: " + game.playGame() + "\n");
 	    
 
 	}
 	*/
+
+	
+	for(int gameNum = 1; gameNum <= 40; gameNum++) {
+	    Game game = new Game(gameNum);
+	    game.playGame();
+	    
+	    System.out.println("\n---------------------------------\n");
+	    System.out.println("Game on: " + gameNum + "\n");
+
+	    LinkedList<Tree<GameState>> winner = game.getWinningPath();
+	    
+	    System.out.println("Length of winning strategy: " + winner.size());
+
+	    for(Tree<GameState> tree: winner) {
+		if(tree.getState().getState().get(1) < 2) {
+		    System.out.println("First state with small 1s at depth: " 
+				       + tree.getState().getDepth());
+		    System.out.println("First state with less than two 1s:\n");
+		    System.out.println(tree.getState());
+		    break;
+		}
+	    }
+	    System.out.println("\n");
+	}
 	
 
 	
@@ -291,6 +366,7 @@ public class Game {
 	}
 	*/
 
+	/*
 	Game game = new Game(75);
 	System.out.println("Winner " + game.playGame());
 	ArrayList<Tree<GameState>> layer1 = game.getRoot().getChildren();
@@ -306,6 +382,26 @@ public class Game {
 	    game.determineVal(desired);
 	    System.out.println(desired.getState().toString() + "\n");
 	}
+	*/
+
+	/*
+	for(int gameNum = 15; gameNum <= 15; gameNum++) {
+	    System.out.println("\n-------------------------------\n");
+	    System.out.println("Game on: " + gameNum);
+	    Game game = new Game(gameNum);
+	    game.playGame();
+	    
+	    ArrayList<Tree<GameState>> flat = game.getRoot().flatten();
+	    for(Tree<GameState> t: flat) {
+		if(t.getState().getVal() == 0) {
+		    game.determineVal(t);
+		}
+		System.out.println(t.getState().toString() + "\n");
+	    }
+	    
+	}
+	*/
+	
 	    
 	
     }

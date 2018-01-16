@@ -51,6 +51,10 @@ public class GameState {
     private HashMap<Integer, Integer> state;
 
 
+    //===================================
+    // GAME STATE CONSTRUCTORS
+    //===================================
+
     /**
      * Constructs a GameState with its current state and depth
      *
@@ -108,6 +112,10 @@ public class GameState {
     }
 
 
+    //===================================
+    // GETTERS AND SETTERS
+    //===================================
+
     /**
      * Getter and setter for the current fibonacci decomposition
      */
@@ -151,6 +159,10 @@ public class GameState {
 
     }
 
+
+    //===================================
+    // MOVE MAKING METHODS
+    //===================================
 
     /**
      * Make a move to sum two consecutive fibs at ind and ind + 1, if there at least 1 of each
@@ -286,6 +298,10 @@ public class GameState {
     }
 
 
+    //===================================
+    // IDENTIFIER METHODS
+    //===================================
+
     /**
      * Verify that the proposed state is different from the current state
      *
@@ -351,6 +367,10 @@ public class GameState {
     }
 
 
+    //===================================
+    // CHILD METHODS
+    //===================================
+
     /**
      * Make all valid moves from the current state
      *
@@ -395,6 +415,28 @@ public class GameState {
 
 
     /**
+     * Determines is the passed GameState represents a child of this GameState
+     *
+     * @param st - A potential child GameState of this GameState
+     * @return - True if st represents a child of this GameState, false otherwise
+     */
+    public boolean hasChild(GameState st) {
+	ArrayList<GameState> children = genChildren();
+	for(GameState child: children) {
+	    if(!child.isDifferent(st)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+
+    //===================================
+    // AUXILIARY METHODS
+    //===================================
+
+    /**
      * Get the nth fibonacci number using recursion. Not the fastest method
      *
      * @return - The nth fibonacci number, with fib(0) = 1 and fib(1) = 1
@@ -433,7 +475,6 @@ public class GameState {
 	return "After " + depth + " moves, the decomposition is:\n" 
 	    + decompInfo + winner;
     }
+
     
-
-
 }
