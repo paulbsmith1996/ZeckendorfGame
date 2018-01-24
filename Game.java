@@ -313,6 +313,11 @@ public class Game {
     public static void main(String[] args) {
 	System.out.println();
 
+	/*
+	Game game = new Game(9);
+	game.playGame();
+	*/
+
 	//============================================
 	// COLLECTION OF RUNNABLE POSSIBILITIES
 	//============================================
@@ -330,7 +335,8 @@ public class Game {
 	}
 	*/
 
-	
+		
+	/*
 	for(int gameNum = 1; gameNum <= 40; gameNum++) {
 	    Game game = new Game(gameNum);
 	    game.playGame();
@@ -340,19 +346,24 @@ public class Game {
 
 	    LinkedList<Tree<GameState>> winner = game.getWinningPath();
 	    
-	    System.out.println("Length of winning strategy: " + winner.size());
+	    System.out.println("Length of winning strategy: " + (winner.size() - 1));
 
+	    int count = 0;
 	    for(Tree<GameState> tree: winner) {
-		if(tree.getState().getState().get(1) < 2) {
-		    System.out.println("First state with small 1s at depth: " 
-				       + tree.getState().getDepth());
-		    System.out.println("First state with less than two 1s:\n");
-		    System.out.println(tree.getState());
-		    break;
+		if(count % 2 == 0) {
+		    System.out.print("Player 1 is playing: ");
+		} else {
+		    System.out.print("Player 2 is playing: ");
 		}
+		System.out.print("Threre are ");
+		System.out.print(tree.getState().getState().get(2));
+		System.out.println(" 2s.");
+		count++;
 	    }
 	    System.out.println("\n");
 	}
+	*/
+	
 	
 
 	

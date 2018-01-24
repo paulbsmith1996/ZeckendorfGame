@@ -269,6 +269,7 @@ public class GameState {
             newState.put(ind - 1, freq1 + 1);
             newState.put(ind + 1, freq3 + 1);
 
+	    //System.out.println("Split " + fib(ind) + "s at depth " + (this.depth + 1));
             return new GameState(newState, this.depth + 1);
 
         }
@@ -293,6 +294,7 @@ public class GameState {
         newState.put(ind - 2, freqLowerNum + 1);
         newState.put(ind + 1, freqHigherNum + 1);
 
+	//System.out.println("Split " + fib(ind) + "s at depth " + (this.depth + 1));
         return new GameState(newState, this.depth + 1);
 
     }
