@@ -313,14 +313,19 @@ public class Game {
     public static void main(String[] args) {
 	System.out.println();
 
+
+
+
+	//============================================
+	// COLLECTION OF RUNNABLE POSSIBILITIES
+	//============================================
+
+
 	/*
 	Game game = new Game(9);
 	game.playGame();
 	*/
 
-	//============================================
-	// COLLECTION OF RUNNABLE POSSIBILITIES
-	//============================================
 	
 	/*
 	for(int gameNum = 1; gameNum <= 50; gameNum++) {
